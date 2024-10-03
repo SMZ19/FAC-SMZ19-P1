@@ -5,6 +5,9 @@ module ALU_tb;
     logic [1:0] Op;
     logic [3:0] Result;
 
+    // Loop control variable
+    integer i;  // Declare integer outside the procedural block
+
     // Instantiate the ALU
     ALU uut (
         .A(A),
@@ -38,6 +41,7 @@ module ALU_tb;
         end
     endtask
 
+    // Main testing block
     initial begin
         // Initialize A and B
         A = 2; // 2'b10
@@ -49,8 +53,9 @@ module ALU_tb;
         $display("A      B      Op     | Result");
         $display("-------------------------------------------------");
 
-        // Iterate through all possible Op values (0 to 3)
-        for (Op = 0; Op < 4; Op = Op + 1) begin
+        // Iterate through all possible Op values (0 to 3) using a separate loop variable
+        for (i = 0; i < 4; i = i + 1) begin
+            Op = i[1:0]; // Assign the lower 2 bits to Op
             #10; // Wait for 10 time units
             display_result(A, B, Op, Result);
         end
